@@ -1,0 +1,48 @@
+.login-header {
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.dashboard-image {
+    height: 200px;
+    width: 350px;
+}
+
+.logo-design {
+    /* height: 100px;
+    width: 300px; */
+    top: 10px;
+}
+.input-field {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .input-field:hover,
+  .input-field:focus {
+    border-color: #d6bcfa; 
+    box-shadow: 0 0 8px #d6bcfa; 
+    outline: none; 
+  }
+
+.input-field.error {
+    border-color: red !important; 
+    /* box-shadow: 0 0 8px red !important;  */
+}
+
+  .custom-signin-button {
+    width: 100%;
+    background-color: #6941c6; 
+    color: white;
+    padding: 0.5rem;
+    border-radius: 0.375rem; 
+    font-weight: 600; 
+    transition: background-color 0.2s ease;
+  }
+  
+  .custom-signin-button:hover {
+    background-color: #3b0a76; 
+  }
+  
