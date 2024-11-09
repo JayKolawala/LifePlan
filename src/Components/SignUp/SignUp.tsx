@@ -1,28 +1,45 @@
 import React, { useState } from "react";
-import "./Login.css";
+import { FaExclamationCircle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { FiMail } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import Dashboard_image from "../../Assets/Dashboard.png";
 import logo from "../../Assets/Logo.png";
 import stars from "../../Assets/Stars.png";
 import arrow from "../../Assets/Hand-drawn-arrow.png";
 import avatars from "../../Assets/Avatar-group.png";
-import { FcGoogle } from "react-icons/fc";
-import { FiMail } from "react-icons/fi";
-import { FaExclamationCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
 type ErrorType = {
+  name: string;
   email: string;
   password: string;
 };
 
-const Login: React.FC = () => {
+const SignUp: React.FC = () => {
+  const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<ErrorType>({ email: "", password: "" });
+  const [error, setError] = useState<ErrorType>({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const validateForm = (): boolean => {
     let isValid = true;
-    const newError: ErrorType = { email: "", password: "" };
+    const newError: ErrorType = {
+      name: "",
+      email: "",
+      password: "",
+    };
+
+    if (!name) {
+      newError.name = "Name is required";
+      isValid = false;
+    } else if (name.length < 3) {
+      newError.name = "Name must be at least 3 characters";
+      isValid = false;
+    }
 
     if (!email) {
       newError.email = "Email is required";
@@ -49,7 +66,7 @@ const Login: React.FC = () => {
   ): void => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Email:", email, "Password:", password);
+      console.log("Name:", name, "Email:", email, "Password:", password);
     }
   };
 
@@ -63,17 +80,36 @@ const Login: React.FC = () => {
           </div>
 
           <div className="justify-center">
-            <div className="items-start ">
-              <h1 className="inter-6 text-3xl pb-3 font-semibold">Log in</h1>
-              <p className="inter-4 text-gray-500 mb-6">
-                Welcome back! Please enter your details.
-              </p>
+            <div className="items-start pb-8">
+              <h1 className="inter-6 text-3xl  font-semibold">Sign up</h1>
             </div>
 
             <div className="items-start">
               <div className="">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email
+                  Name*
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="Enter your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className={`input-field w-full px-4 py-2 border rounded-md focus:outline-none 
+            ${error.name ? "error" : "border-gray-300 focus:ring-purple-300"}`}
+                  />
+                  {error.name && (
+                    <FaExclamationCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 text-red-500" />
+                  )}
+                </div>
+                {error.name && <p className="text-red-500">{error.name}</p>}
+              </div>
+
+              <div className="py-5">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Email*
                 </label>
                 <div className="relative">
                   <input
@@ -95,7 +131,7 @@ const Login: React.FC = () => {
 
               <div className="">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Password
+                  Password*
                 </label>
                 <div className="relative">
                   <input
@@ -123,29 +159,21 @@ const Login: React.FC = () => {
               </div>
 
               <div className="flex !justify-between w-full mb-6 pt-2">
-                <label className=" text-sm text-gray-700">
-                  <input type="checkbox" className="mr-2" />
-                  Remember for 30 days
+                <label className="inter-4 text-sm text-gray-600">
+                  Must be at least 8 characters.
                 </label>
-
-                <Link
-                  to="../ForgetPassword"
-                  className="text-sm text-purple-800 hover:underline "
-                >
-                  Forgot password
-                </Link>
               </div>
 
               <div>
                 <button className="custom-signin-button" onClick={handleSubmit}>
-                  Sign in
+                  Get started
                 </button>
               </div>
 
               <div className="pt-4 relative">
                 <button className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-md font-semibold hover:bg-gray-100">
                   <FcGoogle className="mr-2" size={25} />
-                  <span>Sign in with Google</span>
+                  <span>Sign up with Google</span>
                 </button>
 
                 {/* <img
@@ -157,12 +185,8 @@ const Login: React.FC = () => {
 
               <div className="mt-8 text-sm text-gray-500 text-center ">
                 Don't have an account?{" "}
-                
-                <Link
-                  to="/SignUp"
-                  className="text-purple-800 hover:underline"
-                >
-                  Sign Up
+                <Link to="/" className="text-purple-800 hover:underline">
+                  Log in
                 </Link>
               </div>
             </div>
@@ -183,7 +207,7 @@ const Login: React.FC = () => {
             <img
               src={Dashboard_image}
               alt="Dashboard"
-              className="w-full h-[230px] "
+              className="w-full h-[240px] "
             />
           </div>
 
@@ -233,9 +257,9 @@ const Login: React.FC = () => {
           </div>
 
           <div className="pt-6">
-            <h1 className="text-3xl font-bold mb-2">Log in</h1>
+            <h1 className="text-3xl font-bold mb-2">Sign up</h1>
             <p className="text-gray-500">
-              Welcome back! Please enter your details.
+              Start turning your ideas into reality.
             </p>
           </div>
         </div>
@@ -243,7 +267,28 @@ const Login: React.FC = () => {
         <div className="pt-8 px-4">
           <div className="mb-4 relative">
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email
+              Name*
+            </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className={`input-field w-full px-4 py-2 border rounded-md focus:outline-none ${
+                error.name ? "error" : "border-gray-300 focus:ring-purple-300"
+              }`}
+            />
+            {error.name && (
+              <FaExclamationCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 text-red-500" />
+            )}
+            {error.name && <p className="text-red-500">{error.name}</p>}
+          </div>
+
+          <div className="mb-4 relative">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Email*
             </label>
             <input
               type="text"
@@ -264,7 +309,7 @@ const Login: React.FC = () => {
 
           <div className="mb-4 relative">
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Password
+              Password*
             </label>
             <input
               type="password"
@@ -286,35 +331,28 @@ const Login: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-between mb-6">
-            <label className="flex items-center text-sm text-gray-700">
-              <input type="checkbox" className="mr-2" />
-              Remember for 30 days
+            <label className="flex items-center inter-4 text-sm text-gray-600">
+              Must be at least 8 characters.
             </label>
-            <Link
-              to="../ForgetPassword"
-              className="text-sm text-purple-800 hover:underline "
-            >
-              Forgot password
-            </Link>
           </div>
 
           <button
             className="custom-signin-button w-full py-2 mb-4 bg-purple-700 text-white rounded-md font-semibold hover:bg-purple-800"
             onClick={handleSubmit}
           >
-            Sign in
+            Get started
           </button>
 
           <button className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-md font-semibold hover:bg-gray-100">
             <FcGoogle className="mr-2" size={25} />
-            <span>Sign in with Google</span>
+            <span>Sign up with Google</span>
           </button>
 
           <div className="mt-6 text-sm text-gray-500 text-center">
-            Don't have an account?{" "}
-            <a href="#" className="text-purple-800 hover:underline">
-              Sign up
-            </a>
+            Already have an account?{" "}
+            <Link to="/" className="text-purple-800 hover:underline">
+              Log in
+            </Link>
           </div>
         </div>
       </div>
@@ -322,4 +360,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default SignUp;
